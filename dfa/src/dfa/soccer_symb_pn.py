@@ -156,55 +156,70 @@ for i in range(0,n_robots):
     #final+= ' && (' + formula + ')'
 #final+=')'
 #ltl_dfa=LtlDfa(final)
-##ltl_dfa=LtlDfa(formulas_list[0])
+#ltl_dfa=LtlDfa(formulas_list[0])
 #res=symb_pn.symb_pn_ltl_dfa_composition(prod, ltl_dfa)
+#print(res.n_places)
+#print(len(res.transitions))
+#res.remove_dead_trans_lola()
+#print(res.n_places)
+#print(len(res.transitions))
 
 
-
-#INCREMENTAL MONOLITHIC
-res=prod
-print(res.n_places)
-print(len(res.transitions))
-formulas_list=formulas_list[1:]+[formulas_list[0]]
-for formula in formulas_list:
-    ltl_dfa=LtlDfa(formula)
-    res=symb_pn.symb_pn_ltl_dfa_composition(res,ltl_dfa)
-    print(res.n_places)
-    print(len(res.transitions))
-
-for formula in formulas_list:
-    print(formula)
-
-##MODULAR
-#sup_list=[None for i in range(0, 2*n_robots+1)]
-#i=0
-#total=0
-#total_trans=0
+##INCREMENTAL MONOLITHIC
+#res=prod
+#print(res.n_places)
+#print(len(res.transitions))
+##formulas_list=formulas_list[1:]+[formulas_list[0]]
 #for formula in formulas_list:
     #ltl_dfa=LtlDfa(formula)
-    #res=symb_pn.symb_pn_ltl_dfa_composition(prod,ltl_dfa)
-    #sup_list[i]=res
+    #res=symb_pn.symb_pn_ltl_dfa_composition(res,ltl_dfa)
     #print(res.n_places)
     #print(len(res.transitions))
-    #total+=res.n_places
-    #total_trans+=len(res.transitions)
-    #i+=1
-#print("TOTAL=" + str(total))
-#print("TOTALtrans=" + str(total_trans))
+    #res.remove_dead_trans_lola()
+    #print(res.n_places)
+    #print(len(res.transitions))
 
-#if False:
+#for formula in formulas_list:
+    #print(formula)
+
+#MODULAR
+sup_list=[None for i in range(0, 2*n_robots+1)]
+i=0
+total=0
+total_trans=0
+total_trans_post_del=0
+for formula in formulas_list:
+    ltl_dfa=LtlDfa(formula)
+    res=symb_pn.symb_pn_ltl_dfa_composition(prod,ltl_dfa)
+    print(res.n_places)
+    print(len(res.transitions))
+    total+=res.n_places
+    total_trans+=len(res.transitions)
+    res.remove_dead_trans_lola()
+    sup_list[i]=res
+    print(res.n_places)
+    print(len(res.transitions))
+    total_trans_post_del+=len(res.transitions)
+    i+=1
+print("TOTAL=" + str(total))
+print("TOTALtrans=" + str(total_trans))
+print("TOTALtrans post del=" + str(total_trans_post_del))
+
+#if True:
     #res=sup_list[0]
     #for sup in sup_list[1:]:
         #print(res.n_places)
         #print(len(res.transitions))
         #res=symb_pn.parallel_composition(res,sup)
-
+        #res.remove_dead_trans_lola()
+        #print(res.n_places)
+        #print(len(res.transitions))
 
 
 #print(ltl_dfa)
 #print(res)
 
-#res_dfa=res.build_reachability_dfa()
-#res_dfa.print_dot()
-res.random_run()
+res_dfa=res.build_reachability_dfa()
+res_dfa.print_dot()
+#res.random_run()
 

@@ -30,13 +30,10 @@ class LtlDfa(object):
         dict = spot.make_bdd_dict()
         print("GENERATE")
         a = spot.ltl_to_tgba_fm(f, dict)
-        print(a.to_str('hoa', opt))
         print("ENSURE")
         a = spot.ensure_digraph(a)
-        print(a.to_str('hoa', opt))
         print("MINIMIZE")
         a = spot.minimize_obligation(a, f)
-        print(a.to_str('hoa', opt))
         #a = degeneralized = spot.degeneralize(a)
         if print_dot:
             spot.print_dot(cout, a)

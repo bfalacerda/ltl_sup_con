@@ -1,13 +1,7 @@
 from petri_net import PetriNet, EventTransition
 import copy
-import xml.etree.ElementTree as ET
 
-def is_int(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
+
 
 
 class SymbPetriNet(PetriNet):    
@@ -52,70 +46,17 @@ class SymbPetriNet(PetriNet):
         result+="False state description places:" + str(self.false_state_places) + "\n"
         return result
        
-    def read_pnml(self, file_name):
-        tree = ET.parse(file_name)
-        root = tree.getroot()
-        self.n_places=0
-        self.initial_marking=[]
-        self.place_names=[]
-        self.state_description_props=[]
-        self.true_state_places={}
-        self.false_state_places={}
-        
-        for place in root.iter("place"):
-            self.initial_marking.append(int(place.find("initialMarking").find("value").text[-1:]))
-            name=place.find("name").find("value").text
-            if name[0] =='!':
-                if name[1:] not in self.state_description_props:
-                    self.state_description_props.append(name[1:])
-                self.false_state_places[name[1:]]=self.n_places
-            else:
-                if name not in self.state_description_props:
-                    self.state_description_props.append(name)
-                self.true_state_places[name]=self.n_places
-            self.place_names.append(name)
-            self.n_places=self.n_places+1
-            
-        self.transition_names=[]
-        self.transitions=[]
-        self.events=set()
-        self.uc_events=[]
-        for trans in root.iter("transition"):
-            name=trans.find("name").find("value").text
-            self.transition_names.append(name)
-            if is_int(name[-1]):
-                event=name[:-1]
-            else:
-                event=name
-            self.transitions.append(EventTransition(input_ids=[],
-                                                    input_weights=[],
-                                                    output_ids=[],
-                                                    output_weights=[],
-                                                    event=event))
-            self.events.add(event)
-            
-            
-        for arc in root.iter("arc"):
-            print(str(arc))
-            source=arc.attrib["source"]
-            target=arc.attrib["target"]
-            weight=int(arc.find("inscription").find("value").text[-1])
-            print(str(weight))
-            try:
-                source_id=self.place_names.index(source)
-                target_id=self.transition_names.index(target)
-                self.transitions[target_id].input_ids.append(source_id)
-                self.transitions[target_id].input_weights.append(weight)
-            except ValueError:
-                source_id=self.transition_names.index(source)
-                target_id=self.place_names.index(target)
-                self.transitions[source_id].output_ids.append(target_id)
-                self.transitions[source_id].output_weights.append(weight)
-        self.complete_prop_descrition()
-        self.add_init_state()
-        
+    def add_new_place_description(self, place_name):
+        if place_name[0] =='!':
+            if place_name[1:] not in self.state_description_props:
+                self.state_description_props.append(place_name[1:])
+            self.false_state_places[place_name[1:]]=self.n_places
+        else:
+            if place_name not in self.state_description_props:
+                self.state_description_props.append(place_name)
+            self.true_state_places[place_name]=self.n_places
 
-    def complete_prop_descrition(self):
+    def complete_prop_description(self):
         for (true_prop, place_id) in self.true_state_places.items():
             if true_prop not in self.false_state_places:
                 self.add_complement_place(place_id, true_prop, False)

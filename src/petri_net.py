@@ -4,6 +4,14 @@ from time import sleep
 import copy
 from subprocess import Popen, PIPE
 import json
+import xml.etree.ElementTree as ET
+
+def is_int(s): #NOTA: ISTO FOI PARA FAZER UMA BATOTA ACHO
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 class EventTransition(object):
     def __init__(self,
@@ -25,15 +33,80 @@ class EventTransition(object):
 class PetriNet(object):
     #abstractPN:
     #self.read_pnml(file_name)
+    #self.place_names=[]
     #self.n_places=len(initial_marking)
     #self.initial_marking=initial_marking
     #self.transitions=transitions
     #self.events=events
     #self.uc_events=uc_events
+    ###Symb:
     #self.state_description_props=state_description_props
     #self.true_state_places=true_state_places #{state_description_place:place_id,...}
     #self.false_state_places=false_state_places
-    #self.place_names=[]
+    ###Alg:
+    #self.bounded_places_descriptors=self.bounded_places_descriptors
+    #self.place_bounds=place_bounds
+    #self.positive_bounded_places=positive_bounded_places
+    #self.complement_bounded_places=complement_bounded_places
+    
+    def read_pnml(self, file_name):
+        tree = ET.parse(file_name)
+        root = tree.getroot()
+        self.n_places=0
+        self.initial_marking=[]
+        self.place_names=[]
+        self.state_description_props=[]
+        self.true_state_places={}
+        self.false_state_places={}
+        self.bounded_places_descriptors=[]
+        self.place_bounds={}
+        self.positive_bounded_places={}
+        self.complement_bounded_places={}
+        
+        for place in root.iter("place"):
+            self.initial_marking.append(int(place.find("initialMarking").find("value").text[-1:]))
+            name=place.find("name").find("value").text
+            self.place_names.append(name)
+            self.place_bounds[name]=int(place.find("capacity").find("value").text)
+            self.add_new_place_description(name)
+            self.n_places=self.n_places+1
+            
+        self.transition_names=[]
+        self.transitions=[]
+        self.events=set()
+        self.uc_events=[]
+        for trans in root.iter("transition"):
+            name=trans.find("name").find("value").text
+            self.transition_names.append(name)
+            if is_int(name[-1]):
+                event=name[:-1]
+            else:
+                event=name
+            self.transitions.append(EventTransition(input_ids=[],
+                                                    input_weights=[],
+                                                    output_ids=[],
+                                                    output_weights=[],
+                                                    event=event))
+            self.events.add(event)
+            
+            
+        for arc in root.iter("arc"):
+            source=arc.attrib["source"]
+            target=arc.attrib["target"]
+            weight=int(arc.find("inscription").find("value").text[-1])
+            try:
+                source_id=self.place_names.index(source)
+                target_id=self.transition_names.index(target)
+                self.transitions[target_id].input_ids.append(source_id)
+                self.transitions[target_id].input_weights.append(weight)
+            except ValueError:
+                source_id=self.transition_names.index(source)
+                target_id=self.place_names.index(target)
+                self.transitions[source_id].output_ids.append(target_id)
+                self.transitions[source_id].output_weights.append(weight)
+        #self.complete_prop_descrition()
+        #self.add_init_state()
+    
 
     def add_init_state(self):
         input_ids=[self.n_places]

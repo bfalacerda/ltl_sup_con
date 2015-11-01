@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="!battery_high">
+<graphics>
+<position x="1192.5" y="588.75"/>
+</graphics>
+<name>
+<value>!battery_high</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="!charging">
+<graphics>
+<position x="1192.5" y="423.75"/>
+</graphics>
+<name>
+<value>!charging</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="at_docking_area">
+<graphics>
+<position x="1533.75" y="363.75"/>
+</graphics>
+<name>
+<value>at_docking_area</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="battery_high">
+<graphics>
+<position x="1192.5" y="498.75"/>
+</graphics>
+<name>
+<value>battery_high</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="charging">
+<graphics>
+<position x="1177.5" y="318.75"/>
+</graphics>
+<name>
+<value>charging</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="battery_below_30">
+<graphics>
+<position x="1402.5" y="483.75"/>
+</graphics>
+<name>
+<value>battery_below_30</value>
+<graphics>
+<offset x="121.0" y="44.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="battery_over_80">
+<graphics>
+<position x="1402.5" y="573.75"/>
+</graphics>
+<name>
+<value>battery_over_80</value>
+<graphics>
+<offset x="115.0" y="49.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="dock">
+<graphics>
+<position x="1402.5" y="318.75"/>
+</graphics>
+<name>
+<value>dock</value>
+<graphics>
+<offset x="67.0" y="44.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="undock">
+<graphics>
+<position x="1402.5" y="393.75"/>
+</graphics>
+<name>
+<value>undock</value>
+<graphics>
+<offset x="57.0" y="48.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="!battery_high to battery_over_80" source="!battery_high" target="battery_over_80">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1217" y="597" curvePoint="false"/>
+<arcpath id="001" x="1407" y="593" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!charging to battery_below_30" source="!charging" target="battery_below_30">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1217" y="436" curvePoint="false"/>
+<arcpath id="001" x="1408" y="492" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!charging to dock" source="!charging" target="dock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1216" y="427" curvePoint="false"/>
+<arcpath id="001" x="1407" y="335" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_docking_area to dock" source="at_docking_area" target="dock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1531" y="367" curvePoint="false"/>
+<arcpath id="001" x="1417" y="335" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_docking_area to undock" source="at_docking_area" target="undock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1530" y="375" curvePoint="false"/>
+<arcpath id="001" x="1417" y="410" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_below_30 to !battery_high" source="battery_below_30" target="!battery_high">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1407" y="503" curvePoint="false"/>
+<arcpath id="001" x="1216" y="592" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_below_30 to !charging" source="battery_below_30" target="!charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1408" y="486" curvePoint="false"/>
+<arcpath id="001" x="1217" y="437" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_high to battery_below_30" source="battery_high" target="battery_below_30">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1217" y="507" curvePoint="false"/>
+<arcpath id="001" x="1407" y="497" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_over_80 to battery_high" source="battery_over_80" target="battery_high">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1407" y="587" curvePoint="false"/>
+<arcpath id="001" x="1217" y="515" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_over_80 to charging" source="battery_over_80" target="charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1408" y="576" curvePoint="false"/>
+<arcpath id="001" x="1197" y="340" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="charging to battery_over_80" source="charging" target="battery_over_80">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1198" y="340" curvePoint="false"/>
+<arcpath id="001" x="1408" y="582" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="charging to undock" source="charging" target="undock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1202" y="332" curvePoint="false"/>
+<arcpath id="001" x="1408" y="400" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="dock to at_docking_area" source="dock" target="at_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1418" y="325" curvePoint="false"/>
+<arcpath id="001" x="1530" y="368" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="dock to charging" source="dock" target="charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1408" y="325" curvePoint="false"/>
+<arcpath id="001" x="1202" y="328" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="undock to !charging" source="undock" target="!charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1407" y="410" curvePoint="false"/>
+<arcpath id="001" x="1217" y="432" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="undock to at_docking_area" source="undock" target="at_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="1418" y="400" curvePoint="false"/>
+<arcpath id="001" x="1530" y="377" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>

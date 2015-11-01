@@ -1,0 +1,45 @@
+\documentclass[10pt,a4paper,draft]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+
+
+\section{Single robot specs}
+\begin{align}
+& G ((battery\_high_i) \rightarrow (X(\neg dock_i \wedge \neg go\_to\_charging\_area_i \wedge \neg stop\_offering\_guidance_i)))
+\end{align}
+
+\begin{align}
+& G ((\neg battery\_high_i) \rightarrow (X(\neg undock_i \wedge ((\wedge_{e \in E_2} \neg e) W charging\_i)))
+\end{align}
+
+where $E_2=\{go\_to\_playing\_area_i, offer\_to\_play_i, go\_to\_reception\_area, offer\_to\_guide\}$
+
+
+\begin{align}
+& G ((reached\_playing\_area_i) \rightarrow (X( \neg go\_to\_reception\_area_i W offer\_to\_play_i)))
+\end{align}
+
+\begin{align}
+& G ((reached\_reception\_area_i) \rightarrow (X(\neg go\_to\_playing\_area_i W offer\_guidance)))
+\end{align}
+
+\section{Coordination constraints}
+\begin{align}
+& G ((\neg at\_least(\cup_i at\_reception_i \wedge \cup_i going\_to\_reception_i,1)) \rightarrow  (X (\wedge_{e \in E_1} \neg e))
+\end{align}
+where $E_1=\{go\_to\_playing\_area_i, offer\_to\_play_i\}$
+
+For each robot $i$,
+\begin{align}
+& G (((battery\_high_i \wedge at\_least(\cup_i at\_reception_i \wedge \cup_i going\_to\_reception_i,1)) \rightarrow  (X (\wedge_i \neg stop\_offering\_to\_play_i)))
+\end{align}
+
+\begin{align}
+& G (at\_most(\cup_i at\_reception_i \wedge \cup_i going\_to\_reception_i,2))
+\end{align}
+
+
+\end{document}

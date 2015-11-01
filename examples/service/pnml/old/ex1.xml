@@ -1,0 +1,1475 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="!battery_high">
+<graphics>
+<position x="5655.0" y="555.0"/>
+</graphics>
+<name>
+<value>!battery_high</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="!charging">
+<graphics>
+<position x="5655.0" y="405.0"/>
+</graphics>
+<name>
+<value>!charging</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="!playing_game">
+<graphics>
+<position x="4680.0" y="90.0"/>
+</graphics>
+<name>
+<value>!playing_game</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="at_docking_area">
+<graphics>
+<position x="5490.0" y="345.0"/>
+</graphics>
+<name>
+<value>at_docking_area</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="at_playing_area">
+<graphics>
+<position x="4725.0" y="165.0"/>
+</graphics>
+<name>
+<value>at_playing_area</value>
+<graphics>
+<offset x="91.0" y="-5.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="at_reception_area">
+<graphics>
+<position x="4740.0" y="720.0"/>
+</graphics>
+<name>
+<value>at_reception_area</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="battery_high">
+<graphics>
+<position x="5655.0" y="480.0"/>
+</graphics>
+<name>
+<value>battery_high</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="charging">
+<graphics>
+<position x="5640.0" y="300.0"/>
+</graphics>
+<name>
+<value>charging</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="going_to_docking_area">
+<graphics>
+<position x="5310.0" y="525.0"/>
+</graphics>
+<name>
+<value>going_to_docking_area</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="going_to_docking_area2">
+<graphics>
+<position x="5220.0" y="330.0"/>
+</graphics>
+<name>
+<value>going_to_docking_area2</value>
+<graphics>
+<offset x="54.0" y="51.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="going_to_playing_area">
+<graphics>
+<position x="5265.0" y="135.0"/>
+</graphics>
+<name>
+<value>going_to_playing_area</value>
+<graphics>
+<offset x="117.0" y="5.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="going_to_playing_area2">
+<graphics>
+<position x="4965.0" y="435.0"/>
+</graphics>
+<name>
+<value>going_to_playing_area2</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="going_to_reception_area">
+<graphics>
+<position x="5310.0" y="690.0"/>
+</graphics>
+<name>
+<value>going_to_reception_area</value>
+<graphics>
+<offset x="99.0" y="51.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="going_to_reception_area2">
+<graphics>
+<position x="4710.0" y="420.0"/>
+</graphics>
+<name>
+<value>going_to_reception_area2</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="playing_game">
+<graphics>
+<position x="4545.0" y="150.0"/>
+</graphics>
+<name>
+<value>playing_game</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="battery_below_30">
+<graphics>
+<position x="5865.0" y="465.0"/>
+</graphics>
+<name>
+<value>battery_below_30</value>
+<graphics>
+<offset x="121.0" y="44.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="battery_over_80">
+<graphics>
+<position x="5865.0" y="555.0"/>
+</graphics>
+<name>
+<value>battery_over_80</value>
+<graphics>
+<offset x="115.0" y="49.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="dock">
+<graphics>
+<position x="5865.0" y="300.0"/>
+</graphics>
+<name>
+<value>dock</value>
+<graphics>
+<offset x="67.0" y="44.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="finish_playing_game">
+<graphics>
+<position x="4620.0" y="105.0"/>
+</graphics>
+<name>
+<value>finish_playing_game</value>
+<graphics>
+<offset x="12.0" y="2.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="go_to_docking_area">
+<graphics>
+<position x="5205.0" y="570.0"/>
+</graphics>
+<name>
+<value>go_to_docking_area</value>
+<graphics>
+<offset x="92.0" y="55.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="go_to_playing_area">
+<graphics>
+<position x="5385.0" y="195.0"/>
+</graphics>
+<name>
+<value>go_to_playing_area</value>
+<graphics>
+<offset x="2.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="go_to_playng_area">
+<graphics>
+<position x="4935.0" y="540.0"/>
+</graphics>
+<name>
+<value>go_to_playng_area</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="go_to_reception_area">
+<graphics>
+<position x="5415.0" y="630.0"/>
+</graphics>
+<name>
+<value>go_to_reception_area</value>
+<graphics>
+<offset x="124.0" y="48.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="go_to_reception_area2">
+<graphics>
+<position x="4740.0" y="300.0"/>
+</graphics>
+<name>
+<value>go_to_reception_area2</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="goto_docking_area2">
+<graphics>
+<position x="5115.0" y="285.0"/>
+</graphics>
+<name>
+<value>goto_docking_area2</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reached_docking_area">
+<graphics>
+<position x="5415.0" y="480.0"/>
+</graphics>
+<name>
+<value>reached_docking_area</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reached_docking_area2">
+<graphics>
+<position x="5355.0" y="315.0"/>
+</graphics>
+<name>
+<value>reached_docking_area2</value>
+<graphics>
+<offset x="72.0" y="52.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reached_playing_area">
+<graphics>
+<position x="5130.0" y="135.0"/>
+</graphics>
+<name>
+<value>reached_playing_area</value>
+<graphics>
+<offset x="63.0" y="-17.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reached_playing_area2">
+<graphics>
+<position x="4905.0" y="315.0"/>
+</graphics>
+<name>
+<value>reached_playing_area2</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reached_reception_area">
+<graphics>
+<position x="5190.0" y="690.0"/>
+</graphics>
+<name>
+<value>reached_reception_area</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="reached_reception_area2">
+<graphics>
+<position x="4740.0" y="525.0"/>
+</graphics>
+<name>
+<value>reached_reception_area2</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="start_playing_game">
+<graphics>
+<position x="4605.0" y="210.0"/>
+</graphics>
+<name>
+<value>start_playing_game</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>180</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="undock">
+<graphics>
+<position x="5865.0" y="375.0"/>
+</graphics>
+<name>
+<value>undock</value>
+<graphics>
+<offset x="57.0" y="48.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="!battery_high to battery_over_80" source="!battery_high" target="battery_over_80">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5681" y="567" curvePoint="false"/>
+<arcpath id="001" x="5871" y="576" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!charging to battery_below_30" source="!charging" target="battery_below_30">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5681" y="420" curvePoint="false"/>
+<arcpath id="001" x="5872" y="468" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!charging to dock" source="!charging" target="dock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5680" y="410" curvePoint="false"/>
+<arcpath id="001" x="5871" y="321" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!charging to go_to_playing_area" source="!charging" target="go_to_playing_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5655" y="407" curvePoint="false"/>
+<arcpath id="001" x="5402" y="199" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!charging to go_to_reception_area" source="!charging" target="go_to_reception_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5656" y="427" curvePoint="false"/>
+<arcpath id="001" x="5431" y="647" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!playing_game to go_to_reception_area2" source="!playing_game" target="go_to_reception_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4696" y="116" curvePoint="false"/>
+<arcpath id="001" x="4752" y="297" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!playing_game to goto_docking_area2" source="!playing_game" target="goto_docking_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4705" y="108" curvePoint="false"/>
+<arcpath id="001" x="5122" y="291" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!playing_game to start_playing_game" source="!playing_game" target="start_playing_game">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4684" y="114" curvePoint="false"/>
+<arcpath id="001" x="4622" y="213" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_docking_area to dock" source="at_docking_area" target="dock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5516" y="355" curvePoint="false"/>
+<arcpath id="001" x="5871" y="315" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_docking_area to go_to_playing_area" source="at_docking_area" target="go_to_playing_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5493" y="344" curvePoint="false"/>
+<arcpath id="001" x="5401" y="213" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_docking_area to go_to_reception_area" source="at_docking_area" target="go_to_reception_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5498" y="371" curvePoint="false"/>
+<arcpath id="001" x="5427" y="627" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_docking_area to undock" source="at_docking_area" target="undock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5516" y="358" curvePoint="false"/>
+<arcpath id="001" x="5871" y="390" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_playing_area to go_to_reception_area2" source="at_playing_area" target="go_to_reception_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4738" y="191" curvePoint="false"/>
+<arcpath id="001" x="4752" y="297" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_playing_area to goto_docking_area2" source="at_playing_area" target="goto_docking_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4751" y="181" curvePoint="false"/>
+<arcpath id="001" x="5121" y="305" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_playing_area to start_playing_game" source="at_playing_area" target="start_playing_game">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4723" y="182" curvePoint="false"/>
+<arcpath id="001" x="4621" y="227" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_reception_area to go_to_docking_area" source="at_reception_area" target="go_to_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4766" y="727" curvePoint="false"/>
+<arcpath id="001" x="5211" y="582" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_reception_area to go_to_playng_area" source="at_reception_area" target="go_to_playng_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4762" y="721" curvePoint="false"/>
+<arcpath id="001" x="4941" y="552" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_below_30 to !battery_high" source="battery_below_30" target="!battery_high">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5871" y="486" curvePoint="false"/>
+<arcpath id="001" x="5680" y="561" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_below_30 to !charging" source="battery_below_30" target="!charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5872" y="474" curvePoint="false"/>
+<arcpath id="001" x="5681" y="421" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_high to battery_below_30" source="battery_high" target="battery_below_30">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5681" y="491" curvePoint="false"/>
+<arcpath id="001" x="5871" y="480" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_over_80 to battery_high" source="battery_over_80" target="battery_high">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5871" y="570" curvePoint="false"/>
+<arcpath id="001" x="5681" y="497" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="battery_over_80 to charging" source="battery_over_80" target="charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5872" y="558" curvePoint="false"/>
+<arcpath id="001" x="5661" y="323" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="charging to battery_over_80" source="charging" target="battery_over_80">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5661" y="323" curvePoint="false"/>
+<arcpath id="001" x="5872" y="564" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="charging to undock" source="charging" target="undock">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5666" y="316" curvePoint="false"/>
+<arcpath id="001" x="5872" y="378" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="dock to at_docking_area" source="dock" target="at_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5872" y="309" curvePoint="false"/>
+<arcpath id="001" x="5516" y="355" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="dock to charging" source="dock" target="charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5872" y="303" curvePoint="false"/>
+<arcpath id="001" x="5666" y="311" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="finish_playing_game to !playing_game" source="finish_playing_game" target="!playing_game">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4636" y="117" curvePoint="false"/>
+<arcpath id="001" x="4677" y="106" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_docking_area to going_to_docking_area" source="go_to_docking_area" target="going_to_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5221" y="582" curvePoint="false"/>
+<arcpath id="001" x="5308" y="543" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_playing_area to !charging" source="go_to_playing_area" target="!charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5402" y="206" curvePoint="false"/>
+<arcpath id="001" x="5655" y="407" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_playing_area to going_to_playing_area" source="go_to_playing_area" target="going_to_playing_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5391" y="207" curvePoint="false"/>
+<arcpath id="001" x="5290" y="154" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_playng_area to going_to_playing_area2" source="go_to_playng_area" target="going_to_playing_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4947" y="537" curvePoint="false"/>
+<arcpath id="001" x="4972" y="461" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_reception_area2 to !playing_game" source="go_to_reception_area2" target="!playing_game">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4752" y="297" curvePoint="false"/>
+<arcpath id="001" x="4696" y="116" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_reception_area2 to going_to_reception_area2" source="go_to_reception_area2" target="going_to_reception_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4752" y="327" curvePoint="false"/>
+<arcpath id="001" x="4726" y="417" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_reception_area to !charging" source="go_to_reception_area" target="!charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5432" y="637" curvePoint="false"/>
+<arcpath id="001" x="5656" y="427" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="go_to_reception_area to going_to_reception_area" source="go_to_reception_area" target="going_to_reception_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5421" y="642" curvePoint="false"/>
+<arcpath id="001" x="5334" y="694" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="going_to_docking_area2 to reached_docking_area2" source="going_to_docking_area2" target="reached_docking_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5246" y="340" curvePoint="false"/>
+<arcpath id="001" x="5361" y="327" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="going_to_docking_area to reached_docking_area" source="going_to_docking_area" target="reached_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5335" y="530" curvePoint="false"/>
+<arcpath id="001" x="5421" y="492" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="going_to_playing_area2 to reached_playing_area2" source="going_to_playing_area2" target="reached_playing_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4969" y="433" curvePoint="false"/>
+<arcpath id="001" x="4917" y="342" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="going_to_playing_area to reached_playing_area" source="going_to_playing_area" target="reached_playing_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5262" y="147" curvePoint="false"/>
+<arcpath id="001" x="5146" y="147" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="going_to_reception_area2 to reached_reception_area2" source="going_to_reception_area2" target="reached_reception_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4726" y="446" curvePoint="false"/>
+<arcpath id="001" x="4752" y="522" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="going_to_reception_area to reached_reception_area" source="going_to_reception_area" target="reached_reception_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5307" y="702" curvePoint="false"/>
+<arcpath id="001" x="5206" y="702" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="goto_docking_area2 to !playing_game" source="goto_docking_area2" target="!playing_game">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5121" y="298" curvePoint="false"/>
+<arcpath id="001" x="4705" y="108" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="goto_docking_area2 to going_to_docking_area2" source="goto_docking_area2" target="going_to_docking_area2">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5131" y="297" curvePoint="false"/>
+<arcpath id="001" x="5218" y="335" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="playing_game to finish_playing_game" source="playing_game" target="finish_playing_game">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4569" y="153" curvePoint="false"/>
+<arcpath id="001" x="4626" y="117" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reached_docking_area2 to at_docking_area" source="reached_docking_area2" target="at_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5371" y="327" curvePoint="false"/>
+<arcpath id="001" x="5487" y="353" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reached_docking_area to at_docking_area" source="reached_docking_area" target="at_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5427" y="477" curvePoint="false"/>
+<arcpath id="001" x="5494" y="369" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reached_playing_area2 to at_playing_area" source="reached_playing_area2" target="at_playing_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4911" y="327" curvePoint="false"/>
+<arcpath id="001" x="4748" y="186" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reached_playing_area to at_playing_area" source="reached_playing_area" target="at_playing_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5136" y="147" curvePoint="false"/>
+<arcpath id="001" x="4751" y="175" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reached_reception_area2 to at_reception_area" source="reached_reception_area2" target="at_reception_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4752" y="552" curvePoint="false"/>
+<arcpath id="001" x="4752" y="717" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="reached_reception_area to at_reception_area" source="reached_reception_area" target="at_reception_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5196" y="702" curvePoint="false"/>
+<arcpath id="001" x="4766" y="731" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="start_playing_game to at_playing_area" source="start_playing_game" target="at_playing_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4622" y="220" curvePoint="false"/>
+<arcpath id="001" x="4722" y="182" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="start_playing_game to playing_game" source="start_playing_game" target="playing_game">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4612" y="221" curvePoint="false"/>
+<arcpath id="001" x="4567" y="173" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="undock to !charging" source="undock" target="!charging">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5871" y="396" curvePoint="false"/>
+<arcpath id="001" x="5681" y="415" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="undock to at_docking_area" source="undock" target="at_docking_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="5872" y="384" curvePoint="false"/>
+<arcpath id="001" x="5516" y="358" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>

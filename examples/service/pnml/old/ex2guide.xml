@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><pnml>
+<net id="Net-One" type="P/T net">
+<token id="Default" enabled="true" red="0" green="0" blue="0"/>
+<place id="!guiding_person">
+<graphics>
+<position x="4083.75" y="806.25"/>
+</graphics>
+<name>
+<value>!guiding_person</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="!offering_guidance">
+<graphics>
+<position x="3716.25" y="768.75"/>
+</graphics>
+<name>
+<value>!offering_guidance</value>
+<graphics>
+<offset x="34.0" y="49.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,1</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="at_misc_location - meter nav fails para aqui">
+<graphics>
+<position x="4421.25" y="667.5"/>
+</graphics>
+<name>
+<value>at_misc_location - meter nav fails para aqui</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="at_reception_area">
+<graphics>
+<position x="3378.75" y="690.0"/>
+</graphics>
+<name>
+<value>at_reception_area</value>
+<graphics>
+<offset x="103.0" y="51.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="guiding_person">
+<graphics>
+<position x="4098.75" y="562.5"/>
+</graphics>
+<name>
+<value>guiding_person</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<place id="offering_guidance">
+<graphics>
+<position x="3727.5" y="543.75"/>
+</graphics>
+<name>
+<value>offering_guidance</value>
+<graphics>
+<offset x="38.0" y="47.0"/>
+</graphics>
+</name>
+<initialMarking>
+<value>Default,0</value>
+<graphics>
+<offset x="0.0" y="0.0"/>
+</graphics>
+</initialMarking>
+<capacity>
+<value>0</value>
+</capacity>
+</place>
+<transition id="guidance_finished">
+<graphics>
+<position x="4233.75" y="671.25"/>
+</graphics>
+<name>
+<value>guidance_finished</value>
+<graphics>
+<offset x="58.0" y="61.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="guidance_requested">
+<graphics>
+<position x="3877.5" y="641.25"/>
+</graphics>
+<name>
+<value>guidance_requested</value>
+<graphics>
+<offset x="67.0" y="51.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="offer_guidance">
+<graphics>
+<position x="3570.0" y="633.75"/>
+</graphics>
+<name>
+<value>offer_guidance</value>
+<graphics>
+<offset x="-5.0" y="35.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<transition id="stop_offering_guidance">
+<graphics>
+<position x="3866.25" y="566.25"/>
+</graphics>
+<name>
+<value>stop_offering_guidance</value>
+<graphics>
+<offset x="92.0" y="49.0"/>
+</graphics>
+</name>
+<orientation>
+<value>0</value>
+</orientation>
+<rate>
+<value>1.0</value>
+</rate>
+<timed>
+<value>false</value>
+</timed>
+<infiniteServer>
+<value>false</value>
+</infiniteServer>
+<priority>
+<value>1</value>
+</priority>
+</transition>
+<arc id="!guiding_person to guidance_requested" source="!guiding_person" target="guidance_requested">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4082" y="807" curvePoint="false"/>
+<arcpath id="001" x="3892" y="657" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="!offering_guidance to offer_guidance" source="!offering_guidance" target="offer_guidance">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3716" y="768" curvePoint="false"/>
+<arcpath id="001" x="3585" y="650" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_reception_area to guidance_requested" source="at_reception_area" target="guidance_requested">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3403" y="698" curvePoint="false"/>
+<arcpath id="001" x="3882" y="653" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="at_reception_area to offer_guidance" source="at_reception_area" target="offer_guidance">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3403" y="696" curvePoint="false"/>
+<arcpath id="001" x="3576" y="640" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="guidance_finished to !guiding_person" source="guidance_finished" target="!guiding_person">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4238" y="687" curvePoint="false"/>
+<arcpath id="001" x="4106" y="807" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="guidance_finished to at_guiding_goal_office" source="guidance_finished" target="at_misc_location - meter nav fails para aqui">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4248" y="682" curvePoint="false"/>
+<arcpath id="001" x="4417" y="678" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="guidance_requested to !offering_guidance" source="guidance_requested" target="!offering_guidance">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3882" y="660" curvePoint="false"/>
+<arcpath id="001" x="3738" y="770" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="guidance_requested to guiding_person" source="guidance_requested" target="guiding_person">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3893" y="647" curvePoint="false"/>
+<arcpath id="001" x="4095" y="577" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="guiding_person to guidance_finished" source="guiding_person" target="guidance_finished">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="4121" y="582" curvePoint="false"/>
+<arcpath id="001" x="4240" y="677" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="offer_guidance to at_reception_area" source="offer_guidance" target="at_reception_area">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3575" y="650" curvePoint="false"/>
+<arcpath id="001" x="3403" y="696" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="offer_guidance to offering_guidance" source="offer_guidance" target="offering_guidance">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3586" y="640" curvePoint="false"/>
+<arcpath id="001" x="3725" y="561" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="offering_guidance to guidance_requested" source="offering_guidance" target="guidance_requested">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3751" y="562" curvePoint="false"/>
+<arcpath id="001" x="3883" y="646" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="offering_guidance to stop_offering_guidance" source="offering_guidance" target="stop_offering_guidance">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3752" y="556" curvePoint="false"/>
+<arcpath id="001" x="3872" y="572" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+<arc id="stop_offering_guidance to !offering_guidance" source="stop_offering_guidance" target="!offering_guidance">
+<graphics/>
+<inscription>
+<value>Default,1</value>
+<graphics/>
+</inscription>
+<tagged>
+<value>false</value>
+</tagged>
+<arcpath id="000" x="3871" y="582" curvePoint="false"/>
+<arcpath id="001" x="3736" y="767" curvePoint="false"/>
+<type value="normal"/>
+</arc>
+</net>
+</pnml>

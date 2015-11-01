@@ -1,14 +1,17 @@
-from ltl_dfa import LtlDfa
-import symb_pn
 import sys
+import inspect
+import os
+sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src') #TODO: aprender a fazer isto como deve ser
+
 from copy import deepcopy
+from ltl_dfa import LtlDfa
+from symb_pn import SymbPetriNet
+import symb_pn_compositions
 
 
-pn=symb_pn.SymbPetriNet("/home/bruno/Desktop/Dropbox/Artigos/meus/artigo TAC/submission 2/example/ex2_new.xml")
+pn=SymbPetriNet(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/pnml/ex2_new.xml")
 n_robots=int(sys.argv[1])
 
-
-    
 
 formulas_list=[None for i in range(0, 4)]
 
@@ -41,10 +44,10 @@ print(len(res.transitions))
 #formulas_list=formulas_list[1:]+[formulas_list[0]]
 for formula in formulas_list:
     ltl_dfa=LtlDfa(formula)
-    res=symb_pn.symb_pn_ltl_dfa_composition(res,ltl_dfa)
+    res=symb_pn_compositions.symb_pn_ltl_dfa_composition(res,ltl_dfa)
     print(res.n_places)
     print(len(res.transitions))
-    res.remove_dead_trans_lola()
+    #res.remove_dead_trans_lola()
     print(res.n_places)
     print(len(res.transitions))
     
@@ -57,7 +60,7 @@ for i in range(0,n_robots):
    
 prod=pn_list[0]
 for i in range(1,n_robots):
-    prod=symb_pn.parallel_composition(prod, pn_list[i])
+    prod=symb_pn_compositions.parallel_composition(prod, pn_list[i])
     
 print(prod)
 
@@ -96,7 +99,7 @@ formulas_list=[formulas_list[-1]]+formulas_list[:-1]
 for formula in formulas_list:
     print(formula)
     ltl_dfa=LtlDfa(formula)
-    res=symb_pn.symb_pn_ltl_dfa_composition(res,ltl_dfa)
+    res=symb_pn_compositions.symb_pn_ltl_dfa_composition(res,ltl_dfa)
     print("--------------------------\n\n\n")
     #print(res)
     print(res.n_places)

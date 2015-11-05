@@ -4,6 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src') #TODO: aprender a fazer isto como deve ser
 from ltl_dfa import LtlDfa
 import symb_pn
+import symb_pn_compositions
 
 
 
@@ -109,7 +110,7 @@ for i in range(0,n_robots):
     
 prod=pn_list[0]
 for i in range(1,n_robots):
-    prod=symb_pn.parallel_composition(prod, pn_list[i])
+    prod=symb_pn_compositions.parallel_composition(prod, pn_list[i])
     
     
 
@@ -193,12 +194,13 @@ total_trans=0
 total_trans_post_del=0
 for formula in formulas_list:
     ltl_dfa=LtlDfa(formula)
-    res=symb_pn.symb_pn_ltl_dfa_composition(prod,ltl_dfa)
+    res=symb_pn_compositions.symb_pn_ltl_dfa_composition(prod,ltl_dfa)
     print(res.n_places)
     print(len(res.transitions))
     total+=res.n_places
     total_trans+=len(res.transitions)
-    res.remove_dead_trans_lola()
+    #res.remove_dead_trans_lola()
+    res.build_dead_trans_lp2(0)
     sup_list[i]=res
     print(res.n_places)
     print(len(res.transitions))
@@ -222,7 +224,7 @@ print("TOTALtrans post del=" + str(total_trans_post_del))
 #print(ltl_dfa)
 #print(res)
 
-res_dfa=res.build_reachability_dfa()
-res_dfa.print_dot()
+#res_dfa=res.build_reachability_dfa()
+#res_dfa.print_dot()
 #res.random_run()
 

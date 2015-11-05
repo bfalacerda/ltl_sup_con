@@ -13,6 +13,15 @@ class EventTransition(object):
     def __str__(self):
         return "source=" + str(self.source) + ", target=" + str(self.target) + ", event=" + self.event + "\n"
     
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.source==other.source and self.target==other.target and self.event==other.event
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)   
+    
 class DesAutomaton(object):
     def __init__(self,
                  initial_state,
@@ -84,6 +93,14 @@ class DesAutomaton(object):
             print(next_trans.event + '\n')
             state=next_trans.target
         
+    def check_repeated_trans(self):
+        n_trans=0
+        total_trans=0
+        for trans_list in self.transitions:
+            total_trans=total_trans+len(trans_list)
+            event_list =[trans.event for trans in trans_list]
+            n_trans= n_trans + len(event_list) - len(set(event_list))
+        return (n_trans, total_trans)
 
 def parallel_composition(des_aut1, des_aut2):
     n_states=0

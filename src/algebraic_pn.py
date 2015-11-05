@@ -1,6 +1,12 @@
 from petri_net import PetriNet, EventTransition
 import copy
 
+def weight_dict_to_str(weight_dict):
+    res='('
+    for (key, value) in weight_dict.items():
+        res+= 'M(' + key + ')>=' + str(value) + ' && '
+    res=res[:-4] + ')'
+    return res
 
 class AlgPetriNet(PetriNet):    
     def __init__(self,
@@ -13,7 +19,9 @@ class AlgPetriNet(PetriNet):
                  bounded_places_descriptors=[],
                  place_bounds={},
                  positive_bounded_places={},
-                 complement_bounded_places={}):
+                 complement_bounded_places={},
+                 prod_trans_ids=[]):
+        self.prod_trans_ids=prod_trans_ids
         if file_name != '':
             self.read_pnml(file_name)
         else:
@@ -23,10 +31,11 @@ class AlgPetriNet(PetriNet):
             self.transitions=transitions
             self.events=events
             self.uc_events=uc_events
-            self.bounded_places_descriptors=self.bounded_places_descriptors
+            self.bounded_places_descriptors=bounded_places_descriptors
             self.place_bounds=place_bounds
             self.positive_bounded_places=positive_bounded_places
             self.complement_bounded_places=complement_bounded_places
+            
        
     def __str__(self, print_trans=True):
         result="------Algebraic PN model info------\n"
@@ -34,7 +43,6 @@ class AlgPetriNet(PetriNet):
         result+="Initial marking: " + str(self.initial_marking) + "\n"
         result+="Events: " + str(self.events) + "\n"
         result+="Uncontrollable events: " + str(self.uc_events) + "\n"
-        result+="State description props: " + str(self.state_description_props) + "\n"
         result+="Transitions: \n"
         n_transitions=0   
         for transition in self.transitions:
@@ -115,6 +123,7 @@ class AlgPetriNet(PetriNet):
         for (place_id, weight) in zip(initial_marking_places, initial_marking_values):
             self.initial_marking[place_id]=weight
         del self.initial_marking[init_place_id]
+        del self.place_names[init_place_id]
         self.n_places-=1
         for trans in self.transitions:
             for i in range(0, len(trans.input_ids)):
@@ -126,19 +135,57 @@ class AlgPetriNet(PetriNet):
         for (key, value) in self.positive_bounded_places.items():
             if value > init_place_id:
                 self.positive_bounded_places[key]=value-1
-        for (key, value) in self.false_state_places.items():
+        for (key, value) in self.complement_bounded_places.items():
             if value > init_place_id:
                 self.complement_bounded_places[key]=value-1
+        
 
 
     def add_index(self, index):
+        self.place_names=[name + str(index) for name in self.place_names]
         self.events=[event + str(index) for event in self.events]
         self.uc_events=[uc_event + str(index) for event in self.uc_events]
         for transition in self.transitions:
             transition.event=transition.event + str(index)
-        self.state_description_props=[prop + str(index) for prop in self.state_description_props]
+        self.bounded_places_descriptors=[prop + str(index) for prop in self.bounded_places_descriptors]
         self.place_bounds={key+str(index):value for (key,value) in self.place_bounds.items()}
         self.positive_bounded_places={key+str(index):value for (key,value) in self.positive_bounded_places.items()}
         self.complement_bounded_places={key+str(index):value for (key,value) in self.complement_bounded_places.items()}
-            
-
+        
+    def add_counter_place(self, weight_dict, counter_place_name=None):
+        for trans in self.transitions:
+            weight=0
+            for (input_id, input_weight) in zip(trans.input_ids, trans.input_weights):
+                name=self.place_names[input_id]
+                if name in weight_dict:
+                    weight=weight - weight_dict[name]*input_weight
+            for (output_id, output_weight) in zip(trans.output_ids, trans.output_weights):
+                name=self.place_names[output_id]
+                if name in weight_dict:
+                    weight=weight + weight_dict[name]*output_weight
+            if weight<0:
+                trans.input_ids.append(self.n_places)
+                trans.input_weights.append(-weight)
+            elif weight>0:
+                trans.output_ids.append(self.n_places)
+                trans.output_weights.append(weight)
+        initial_marking=0
+        bound=0
+        for (key,value) in weight_dict.items():
+            index=self.place_names.index(key)
+            initial_marking+=value*self.initial_marking[index]
+            if key[0]=='!':
+                bound+=value*self.place_bounds[key[1:]]
+            else:
+                bound+=value*self.place_bounds[key]
+        self.initial_marking.append(initial_marking)
+        if counter_place_name is None:
+            counter_place_name = weight_dict_to_str(weight_dict)
+        self.place_names.append(counter_place_name)
+        self.bounded_places_descriptors.append(counter_place_name)
+        self.positive_bounded_places[counter_place_name]=self.n_places
+        self.place_bounds[counter_place_name]=bound      
+        self.n_places+=1
+        self.add_complement_place(self.n_places-1, counter_place_name, False)
+        
+       

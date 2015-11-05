@@ -1,8 +1,8 @@
-from symb_pn import EventTransition, SymbPetriNet
+from petri_net import EventTransition
+from symb_pn import SymbPetriNet
 import copy
 
 def parallel_composition(symb_pn1, symb_pn2):
-
     n_places=symb_pn1.n_places+symb_pn2.n_places #assumes disjoint sets
     initial_marking=symb_pn1.initial_marking+symb_pn2.initial_marking
     transitions=[]

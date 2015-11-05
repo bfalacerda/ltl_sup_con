@@ -5,6 +5,8 @@ import copy
 from subprocess import Popen, PIPE
 import json
 import xml.etree.ElementTree as ET
+import pulp
+from scipy.optimize import linprog
 
 def is_int(s): #NOTA: ISTO FOI PARA FAZER UMA BATOTA ACHO
     try:
@@ -26,6 +28,21 @@ class EventTransition(object):
         self.output_ids=output_ids
         self.output_weights=output_weights
         self.event=event
+        
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            res=True
+            res=res and self.input_ids==other.input_ids
+            res=res and self.input_weights==other.input_weights
+            res=res and self.output_ids==other.output_ids
+            res=res and self.output_weights==other.output_weights
+            res=res and self.event==other.event
+            return res
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)    
 
     def __str__(self):
         return "input ids=" + str(self.input_ids) + ", input_weights=" + str(self.input_weights) + " output ids=" + str(self.output_ids) + ", output_weights=" + str(self.output_weights) + ", event=" + self.event + "\n"
@@ -129,6 +146,7 @@ class PetriNet(object):
         self.initial_marking=[0 for i in range(0,self.n_places)]
         self.initial_marking.append(1)
         self.n_places+=1
+        self.place_names.append('init_place')
 
 
     def generate_lola_byte_string(self):
@@ -165,18 +183,92 @@ class PetriNet(object):
             result=result['analysis']['result']
             j+=1
             if result:
-                print("dead")
+                #print("dead")
                 n_removed+=1
                 del(self.transitions[i])
                 print("REMOVE" + str(i/len(self.transitions)))
             else:
-                print("live")
+                #print("live")
                 i=i+1
-            if n_removed%10 == 0:
+            if n_removed%100 == 0:
                 print("REGENERATING MODEL")
                 j=i
                 lola_model=self.generate_lola_byte_string()
 
+    
+    
+    def build_dead_trans_lp(self, transition_id):
+        analysed_transition=self.transitions[transition_id]
+        n_transitions=len(self.transitions)
+        self.firing_count_vector=[pulp.LpVariable("t"+str(i),0) for i in range(0, n_transitions)]
+        weights=[[0 for i in range(0,n_transitions)] for j in range(0,self.n_places)]
+        for i in range(0, n_transitions):
+            trans=self.transitions[i]
+            for (input_id, input_weight) in zip(trans.input_ids, trans.input_weights):
+                weights[input_id][i]=-input_weight
+            for (output_id, output_weight) in zip(trans.output_ids, trans.output_weights):
+                weights[output_id][i]+=output_weight
+       
+        
+        
+        i = 0
+        while i < n_transitions:
+            analysed_trans_input_weights=[0 for i in range(0,self.n_places)]
+            prob=pulp.LpProblem("prob", pulp.LpMinimize)
+            analysed_transition=self.transitions[i]
+            for (input_id, input_weight) in zip(analysed_transition.input_ids, analysed_transition.input_weights):
+                analysed_trans_input_weights[input_id]=input_weight    
+            for j in range(0,self.n_places):
+                prob+=self.initial_marking[j]+pulp.lpDot(weights[j], self.firing_count_vector) >= analysed_trans_input_weights[j]
+            try:
+                status = prob.solve(pulp.GLPK(msg=0))
+                print(str(status))
+                i=i+1
+            except Exception:
+                status = prob.solve(pulp.GLPK(msg=0))
+                print(str(status))
+                i=i+1
+    
+    def build_dead_trans_lp2(self, transition_id):
+        analysed_transition=self.transitions[transition_id]
+        n_transitions=len(self.transitions)
+        #self.firing_count_vector=[pulp.LpVariable("t"+str(i),0) for i in range(0, n_transitions)]
+        weights=[[0 for i in range(0,n_transitions)] for j in range(0,self.n_places)]
+        for i in range(0, n_transitions):
+            trans=self.transitions[i]
+            for (input_id, input_weight) in zip(trans.input_ids, trans.input_weights):
+                weights[input_id][i]=input_weight
+            for (output_id, output_weight) in zip(trans.output_ids, trans.output_weights):
+                weights[output_id][i]-=output_weight
+       
+        
+        
+        i = 0
+        n_removed=0
+        #bounds=[ for i in range(0,n_transitions)]
+        objective=[0 for i in range(0,n_transitions)]
+        while i < len(self.transitions):
+            analysed_trans_input_weights=[0 for k in range(0,self.n_places)]
+            analysed_transition=self.transitions[i]
+            for (input_id, input_weight) in zip(analysed_transition.input_ids, analysed_transition.input_weights):
+                analysed_trans_input_weights[input_id]=input_weight    
+            restrictions=[self.initial_marking[k]-analysed_trans_input_weights[k] for k in range(0, self.n_places)]
+            res=linprog(objective, A_ub=weights, b_ub=restrictions, bounds=(0,None), options={"disp": False})          
+            if res.success:
+                i=i+1
+            else:
+                n_removed+=1
+                del(self.transitions[i])
+                print("REMOVE" + str(i/len(self.transitions)))
+  
+        print(str(n_removed))
+        #prob+=pulp.lpDot([1 for i in range(0,n_transitions)], firing_count_vector)
+        #prob+=pulp.lpSum(firing_count_vector)
+        #return prob
+        #
+       
+        
+        #return pulp.LpStatus[status]
     
     
     def build_reachability_dfa(self): #MIGHT BE BUGGY
@@ -246,4 +338,15 @@ class PetriNet(object):
             print(next_trans.event + '\n')
             marking=self.fire_transition(marking,next_trans)
             sleep(sleep_time)
+            
+    def print_equal_trans(self):
+        res=0
+        for i in range(0, len(self.transitions)):
+            trans1=self.transitions[i]
+            for j in range(0,len(self.transitions)):
+                if i!=j:
+                    if trans1 == self.transitions[j]:
+                        print(str(i) + '-' + str(j))
+                        res+=1
+        return res
 

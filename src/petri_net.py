@@ -149,7 +149,7 @@ class PetriNet(object):
         self.place_names.append('init_place')
 
 
-    def generate_lola_byte_string(self):
+    def generate_lola_string(self, byte_string=True):
         print("START WRITING LOLA")
         result="PLACE\n\nSAFE 1:\n"
         for i in range(0,self.n_places):
@@ -159,6 +159,7 @@ class PetriNet(object):
             result+="\tp" + str(i) + (' : ') + str(self.initial_marking[i]) + ",\n"
         result=result[:-2] + ";\n\n"
         for i in range(0,len(self.transitions)):
+            print(str(i))
             transition=self.transitions[i]
             result+="TRANSITION t" + str(i) + ".[" + transition.event + "]\n\tCONSUME\n"
             for (place_id, weight) in zip(transition.input_ids, transition.input_weights):
@@ -167,13 +168,63 @@ class PetriNet(object):
             for (place_id, weight) in zip(transition.output_ids, transition.output_weights):
                 result+="\t\tp" + str(place_id) + " : " + str(weight) + ",\n"
             result=result[:-2] + ";\n"
-        return result.encode('utf-8')
+        if byte_string:
+            return result.encode('utf-8')
+        else:
+            return result
+        
+    def generate_tina_string(self):
+        result="net supervisor\n"
+        i=0
+        for transition in self.transitions:
+            result+="tr t_" + str(i) + '_'  + transition.event + " "
+            for (place_id, weight) in zip(transition.input_ids, transition.input_weights):
+                result+="p" + str(place_id) + "*" + str(weight) + " "               
+            result+="-> "             
+            for (place_id, weight) in zip(transition.output_ids, transition.output_weights):
+                result+="p" + str(place_id) + "*" + str(weight) + " "
+            result+="\n"
+            i+=1
+        i=0
+        for n_tokens in self.initial_marking:
+            result+="pl p" + str(i) + " (" + str(n_tokens) + ")\n"            
+            i+=1
+        return result
+    
+    def remove_dead_trans_tina(self):
+        n_removed=0
+        tina_string=self.generate_tina_string()
+        tina_model_file=open("tina.net", 'w')
+        tina_model_file.write(tina_string)
+        tina_model_file.close()
+        tina=Popen(["/home/bruno/tina-3.4.2/bin/tina", "-R", "-q", "-stats", "tina.net"], stdin=PIPE, stdout=PIPE)
+        output=tina.communicate()[0].decode()
+        output=output.split(' ')
+        print("REMOVING")
+        n_output=len(output)
+        
+        i=0
+        while output[i] != 'dead':
+            i+=1
+        i+=1    
+        while output[i] != 'dead':
+            i+=1
+        n_dead= int(output[i-1].split('\n')[1])
+        i+=3
+        while output[i][-4:] != 'dead':
+            i+=1
+        i+=2        
+        dead_trans_ids = [int(output[i+j].split('_')[1]) for j in range(0,n_dead)]
+        dead_trans_ids.sort(reverse=True)
+        for dead_trans_id in dead_trans_ids:
+            del(self.transitions[dead_trans_id])
+                            
     
     def remove_dead_trans_lola(self):
         i=0
         j=0
         n_removed=0
-        lola_model=self.generate_lola_byte_string()
+        lola_model=self.generate_lola_string()
         while i < len(self.transitions):
             transition=self.transitions[i]
             lola = Popen(["lola", "--formula=AG NOT FIREABLE(t" +  str(j) + ".[" + transition.event + "])", '--quiet',
@@ -193,11 +244,11 @@ class PetriNet(object):
             if n_removed%100 == 0:
                 print("REGENERATING MODEL")
                 j=i
-                lola_model=self.generate_lola_byte_string()
+                lola_model=self.generate_lola_string()
 
     
     
-    def build_dead_trans_lp(self, transition_id):
+    def build_dead_trans_lp(self, transition_id): #uses pulp; doesnt work
         analysed_transition=self.transitions[transition_id]
         n_transitions=len(self.transitions)
         self.firing_count_vector=[pulp.LpVariable("t"+str(i),0) for i in range(0, n_transitions)]
@@ -208,9 +259,6 @@ class PetriNet(object):
                 weights[input_id][i]=-input_weight
             for (output_id, output_weight) in zip(trans.output_ids, trans.output_weights):
                 weights[output_id][i]+=output_weight
-       
-        
-        
         i = 0
         while i < n_transitions:
             analysed_trans_input_weights=[0 for i in range(0,self.n_places)]
@@ -229,10 +277,9 @@ class PetriNet(object):
                 print(str(status))
                 i=i+1
     
-    def build_dead_trans_lp2(self, transition_id):
+    def build_dead_trans_lp2(self, transition_id): #uses scipyç very slow and removes very little transitions
         analysed_transition=self.transitions[transition_id]
         n_transitions=len(self.transitions)
-        #self.firing_count_vector=[pulp.LpVariable("t"+str(i),0) for i in range(0, n_transitions)]
         weights=[[0 for i in range(0,n_transitions)] for j in range(0,self.n_places)]
         for i in range(0, n_transitions):
             trans=self.transitions[i]
@@ -240,9 +287,6 @@ class PetriNet(object):
                 weights[input_id][i]=input_weight
             for (output_id, output_weight) in zip(trans.output_ids, trans.output_weights):
                 weights[output_id][i]-=output_weight
-       
-        
-        
         i = 0
         n_removed=0
         #bounds=[ for i in range(0,n_transitions)]
@@ -262,22 +306,17 @@ class PetriNet(object):
                 print("REMOVE" + str(i/len(self.transitions)))
   
         print(str(n_removed))
-        #prob+=pulp.lpDot([1 for i in range(0,n_transitions)], firing_count_vector)
-        #prob+=pulp.lpSum(firing_count_vector)
-        #return prob
-        #
-       
-        
-        #return pulp.LpStatus[status]
+
+   
     
     
-    def build_reachability_dfa(self): #MIGHT BE BUGGY
+    def build_reachability_dfa(self, add_description_props=False): 
         n_states=0
         initial_state=0
         product_labels=[]
         events=self.events
-        state_description_props=[]
         queue=[self.initial_marking]
+        state_description_props=[]
         transitions=[]
         
         while queue!=[]:
@@ -296,9 +335,12 @@ class PetriNet(object):
                                                        target=next_marking_id,
                                                        event=transition.event))
             n_states+=1
+            if add_description_props:
+                state_description_props.append(self.get_marking_true_props(marking))
             transitions.append(new_transitions)
-                       
-        state_description_props=[[] for i in range(0,n_states)]
+        
+        if not add_description_props:
+            state_description_props=[[] for i in range(0,n_states)]
         product_labels=state_description_props
         return des_dfa.DesAutomaton(initial_state=initial_state,
                         accepting_states=[],
@@ -308,6 +350,13 @@ class PetriNet(object):
                         state_description_props=state_description_props,
                         product_automaton_labels=product_labels)
         
+    def get_marking_true_props(self, marking):
+        true_props=[]
+        for (key,value) in self.true_state_places.items():
+            if marking[value]==1:
+                true_props.append(key)
+        return true_props
+    
     
     def get_active_transitions(self, marking):
         result=[]

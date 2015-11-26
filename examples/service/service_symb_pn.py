@@ -9,7 +9,7 @@ from symb_pn import SymbPetriNet
 import symb_pn_compositions
 
 
-pn=SymbPetriNet(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/pnml/ex2_new2.xml")
+pn=SymbPetriNet(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/pnml/ex2_new.xml")
 pn.complete_prop_description()
 pn.add_init_state()
 n_robots=int(sys.argv[1])
@@ -111,7 +111,7 @@ for formula in formulas_list:
     #print(len(res.transitions))  
     #print(res)
     #res.random_run(sleep_time=0)
-    
+    #res.remove_dead_trans_tina()    
 ##for formula in formulas_list:
     ##print(formula)
 

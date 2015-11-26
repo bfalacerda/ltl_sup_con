@@ -88,8 +88,6 @@ for i in range(1,n_robots):
 formulas_list=[None for i in range(1 + n_robots)]
 spgecs_list=[None for i in range(1 + n_robots)]
 
-formulas_list[0]='[] (( battery_high) -> (X (!dock && !go_to_docking_area && !stop_offering_guidance)))'
-spgecs_list[0]={'battery_high':['battery_high',1], '!battery_high':['!battery_high',1]}
 counter_place_def={}
 
 for i in range(0, n_robots):
@@ -98,19 +96,19 @@ for i in range(0, n_robots):
 prod.add_counter_place(counter_place_def, "n_to_reception")
 
 for j in range(0, n_robots):
-    spgecs_list[j]={'battery_high' + str(j):['battery_high'+ str(j),1], 
+    spgecs_list[j+1]={'battery_high' + str(j):['battery_high'+ str(j),1], 
                     '!battery_high'+ str(j):['!battery_high'+ str(j),1],
                     "at_least_one_to_reception":["n_to_reception",1],
                     "!at_least_one_to_reception":["!n_to_reception",2*n_robots]}
-    formulas_list[j]='[] ((battery_high' + str(j) + ' && at_least_one_to_reception) -> (X (!stop_offering_to_play' + str(j) + ')))'
+    formulas_list[j+1]='[] ((battery_high' + str(j) + ' && at_least_one_to_reception) -> (X (!stop_offering_to_play' + str(j) + ')))'
     
-spgecs_list[-1]={"at_least_one_to_reception":["n_to_reception",1],
+spgecs_list[0]={"at_least_one_to_reception":["n_to_reception",1],
                  "!at_least_one_to_reception":["!n_to_reception",2*n_robots]}
 formula='[] ((!at_least_one_to_reception) -> (X ('
 for i in range(0,n_robots):
     formula+='!go_to_playing_area' + str(i) + ' && !offer_to_play' + str(i) + ' && '
 formula=formula[:-4]+')))'
-formulas_list[-1]=formula
+formulas_list[0]=formula
 
 print(str(formulas_list))
 print(str(spgecs_list))
@@ -123,6 +121,7 @@ res=prod
 print(res.n_places)
 print(len(res.transitions))
 #formulas_list=[formulas_list[-1]]+formulas_list[:-1]
+i=0
 for (formula, spgec_def) in zip(formulas_list, spgecs_list):
     print(formula)
     ltl_dfa=LtlDfa(formula)
@@ -136,17 +135,20 @@ for (formula, spgec_def) in zip(formulas_list, spgecs_list):
     n_specs+=1
     #res.random_run(sleep_time=0)
     #res.remove_dead_trans_lola()
-    res.build_dead_trans_lp2(0)
-    #break
+    #res.build_dead_trans_lp2(0)
+    #if i==0:
+        #break
+    #i+=1
     #res.build_dead_trans_lp2(0)
     #print(res.n_places)
     #print(len(res.transitions))  
     #print(res)
     #res.random_run(sleep_time=0)
-    
+#print(res.generate_lola_string(False))    
 ##for formula in formulas_list:
     ##print(formula)
-
+#res.remove_dead_trans_tina()
+#res.remove_dead_trans_lola()
 ##MODULAR
 #sup_list=[None for i in range(0, n_robots+1)]
 #i=0

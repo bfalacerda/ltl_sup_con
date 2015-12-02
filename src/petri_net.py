@@ -218,6 +218,7 @@ class PetriNet(object):
         dead_trans_ids.sort(reverse=True)
         for dead_trans_id in dead_trans_ids:
             del(self.transitions[dead_trans_id])
+            del(self.prod_trans_ids[dead_trans_id])
                             
     
     def remove_dead_trans_lola(self):
@@ -237,6 +238,7 @@ class PetriNet(object):
                 #print("dead")
                 n_removed+=1
                 del(self.transitions[i])
+                del(self.prod_trans_ids[i])
                 print("REMOVE" + str(i/len(self.transitions)))
             else:
                 #print("live")
@@ -322,6 +324,7 @@ class PetriNet(object):
         while queue!=[]:
             new_transitions=[]
             marking=queue.pop(0)
+            #print(str(marking))
             product_labels.append(marking)
             active_trans=self.get_active_transitions(marking)
             for transition in active_trans:
@@ -334,7 +337,13 @@ class PetriNet(object):
                 new_transitions.append(des_dfa.EventTransition(source=n_states,
                                                        target=next_marking_id,
                                                        event=transition.event))
+                if transition.event =='tf':
+                    print("AHAH")
+                    print(next_marking)
             n_states+=1
+            if n_states > 200:
+                break
+            #print(n_states)
             if add_description_props:
                 state_description_props.append(self.get_marking_true_props(marking))
             transitions.append(new_transitions)
@@ -398,4 +407,19 @@ class PetriNet(object):
                         print(str(i) + '-' + str(j))
                         res+=1
         return res
+    
+    def check_reachability(self, marking):
+        marking_lola='('
+        for (index, n_tokens) in zip(range(0,self.n_places), marking):
+            marking_lola+= "p" + str(index) + " = " + str(n_tokens) + " AND "
+        marking_lola=marking_lola[:-5] + ")"
+        lola_model=self.generate_lola_string()
+        lola = Popen(["lola", '--formula=EF ' + marking_lola, '--quiet',
+                          "--json"], stdin=PIPE, stdout=PIPE) 
+        output=lola.communicate(input=lola_model)
+        print(str(output))
+        result=json.loads(output[0].decode())
+        print(str(result))
+
+
 

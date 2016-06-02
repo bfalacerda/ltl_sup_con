@@ -1,7 +1,7 @@
 import sys
 import inspect
 import os
-sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src') #TODO: aprender a fazer isto como deve ser
+sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src') 
 
 from copy import deepcopy
 from ltl_dfa import LtlDfa

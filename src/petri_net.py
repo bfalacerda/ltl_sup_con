@@ -218,7 +218,8 @@ class PetriNet(object):
         dead_trans_ids.sort(reverse=True)
         for dead_trans_id in dead_trans_ids:
             del(self.transitions[dead_trans_id])
-            del(self.prod_trans_ids[dead_trans_id])
+            if hasattr(self, 'prod_trans_ids'):
+                del(self.prod_trans_ids[dead_trans_id])
                             
     
     def remove_dead_trans_lola(self):
@@ -238,7 +239,8 @@ class PetriNet(object):
                 #print("dead")
                 n_removed+=1
                 del(self.transitions[i])
-                del(self.prod_trans_ids[i])
+                if hasattr(self, 'prod_trans_ids'):
+                    del(self.prod_trans_ids[i])
                 print("REMOVE" + str(i/len(self.transitions)))
             else:
                 #print("live")
@@ -279,7 +281,7 @@ class PetriNet(object):
                 print(str(status))
                 i=i+1
     
-    def build_dead_trans_lp2(self, transition_id): #uses scipyç very slow and removes very little transitions
+    def build_dead_trans_lp2(self, transition_id): #uses scipy very slow and removes very little transitions
         analysed_transition=self.transitions[transition_id]
         n_transitions=len(self.transitions)
         weights=[[0 for i in range(0,n_transitions)] for j in range(0,self.n_places)]

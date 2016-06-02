@@ -1,11 +1,12 @@
 import sys
 import inspect
 import os
-sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src') #TODO: aprender a fazer isto como deve ser
+sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src')
 
 from copy import deepcopy
 from ltl_dfa import LtlDfa
 import des_dfa
+import des_dfa_compositions
 from symb_pn import SymbPetriNet
 import symb_pn_compositions
 
@@ -50,7 +51,7 @@ for formula in formulas_list:
     res=symb_pn_compositions.symb_pn_ltl_dfa_composition(res,ltl_dfa)
     print(res.n_places)
     print(len(res.transitions))
-    res.remove_dead_trans_lola()
+    res.remove_dead_trans_tina()
     print(res.n_places)
     print(len(res.transitions))
     
@@ -68,7 +69,7 @@ for i in range(0,n_robots):
     
 prod=dfa_list[0]
 for i in range(1,n_robots):
-    prod=des_dfa.parallel_composition(prod, dfa_list[i])
+    prod=des_dfa_compositions.parallel_composition(prod, dfa_list[i])
     
 #print(prod)
 
@@ -81,7 +82,7 @@ prod.add_init_state()
 formulas_list=[None for i in range(1 + n_robots)]
 
 for j in range(0, n_robots):    
-    formula='[] ((battery_high' + str(j) + ' && ('
+    formula='G ((battery_high' + str(j) + ' && ('
     for i in range(0,n_robots):
         formula+='going_to_reception_area' + str(i) + ' || at_reception_area' + str(i) + ' || '
     formula=formula[:-4] + ')) -> (X (!stop_offering_to_play' + str(j) + ')))'
@@ -108,7 +109,7 @@ res=prod
 for formula in formulas_list:
     print(formula)
     ltl_dfa=LtlDfa(formula)
-    res=des_dfa.des_ltl_dfa_composition(res,ltl_dfa)
+    res=des_dfa_compositions.des_ltl_dfa_composition(res,ltl_dfa)
     print("--------------------------\n\n\n")
     print(res.n_states)
     

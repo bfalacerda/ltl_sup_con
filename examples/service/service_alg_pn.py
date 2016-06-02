@@ -1,10 +1,10 @@
 import sys
 import inspect
 import os
-sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src') #TODO: aprender a fazer isto como deve ser
+sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src')
 
 from copy import deepcopy
-from ltl_dfa import LtlDfa
+from ..ltl_sup_con.ltl_dfa import LtlDfa
 from symb_pn import SymbPetriNet
 from algebraic_pn import AlgPetriNet
 import alg_pn_compositions

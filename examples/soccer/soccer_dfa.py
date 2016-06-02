@@ -4,6 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/../../src') #TODO: aprender a fazer isto como deve ser
 from ltl_dfa import LtlDfa
 import des_dfa
+import des_dfa_compositions
 
 
 n_robots=int(sys.argv[1])
@@ -88,7 +89,7 @@ dfa_list[0].print_dot()
     
 prod=dfa_list[0]
 for i in range(1,n_robots):
-    prod=des_dfa.parallel_composition(prod, dfa_list[i])
+    prod=des_dfa_compositions.parallel_composition(prod, dfa_list[i])
     
     
 #prod.print_dot()    
@@ -141,7 +142,7 @@ for formula in formulas_list[1:]:
     final+= ' && (' + formula + ')'
 final+=')'
 ltl_dfa=LtlDfa(final)
-res=des_dfa.des_ltl_dfa_composition(prod, ltl_dfa)
+res=des_dfa_compositions.des_ltl_dfa_composition(prod, ltl_dfa)
 
 
 ##INCREMENTAL MONOLITHIC

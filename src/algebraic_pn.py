@@ -144,7 +144,7 @@ class AlgPetriNet(PetriNet):
     def add_index(self, index):
         self.place_names=[name + str(index) for name in self.place_names]
         self.events=[event + str(index) for event in self.events]
-        self.uc_events=[uc_event + str(index) for event in self.uc_events]
+        self.uc_events=[uc_event + str(index) for uc_event in self.uc_events]
         for transition in self.transitions:
             transition.event=transition.event + str(index)
         self.bounded_places_descriptors=[prop + str(index) for prop in self.bounded_places_descriptors]

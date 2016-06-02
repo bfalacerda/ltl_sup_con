@@ -136,6 +136,9 @@ def alg_pn_ltl_dfa_composition(alg_pn, ltl_dfa, props_to_spgeq, n_spec):
                        complement_bounded_places=complement_bounded_places,
                        prod_trans_ids=prod_trans_ids)
 
+    
+
+
 def build_min_sat_trans(conj_clause, pn_transition, place_bounds, positive_bounded_places, complement_bounded_places, props_to_spgeq):
     min_sat_trans=EventTransition(input_ids=pn_transition.input_ids.copy(),
                                   input_weights=pn_transition.input_weights.copy(),
@@ -152,9 +155,9 @@ def build_min_sat_trans(conj_clause, pn_transition, place_bounds, positive_bound
             comp_place_index=positive_bounded_places[props_to_spgeq[key][0]]
             min_tokens=props_to_spgeq['!' + key][1]
         bound=place_bounds[props_to_spgeq[key][0]]
-        input_weight=get_weight(pn_transition.input_ids, pn_transition.input_weights, place_index)
-        output_weight_to_complement=get_weight(pn_transition.output_ids, pn_transition.output_weights, comp_place_index)
-        output_weight=get_weight(pn_transition.output_ids, pn_transition.output_weights, place_index)
+        input_weight=get_weight(min_sat_trans.input_ids, min_sat_trans.input_weights, place_index)
+        output_weight_to_complement=get_weight(min_sat_trans.output_ids, min_sat_trans.output_weights, comp_place_index)
+        output_weight=get_weight(min_sat_trans.output_ids, min_sat_trans.output_weights, place_index)
         
         if bound - max(input_weight, output_weight_to_complement) + output_weight < min_tokens:
             return False

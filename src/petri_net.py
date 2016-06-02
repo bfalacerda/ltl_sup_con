@@ -150,7 +150,7 @@ class PetriNet(object):
 
 
     def generate_lola_string(self, byte_string=True):
-        print("START WRITING LOLA")
+        #print("START WRITING LOLA")
         result="PLACE\n\nSAFE 1:\n"
         for i in range(0,self.n_places):
             result+="p" + str(i) + ', '
@@ -159,7 +159,6 @@ class PetriNet(object):
             result+="\tp" + str(i) + (' : ') + str(self.initial_marking[i]) + ",\n"
         result=result[:-2] + ";\n\n"
         for i in range(0,len(self.transitions)):
-            print(str(i))
             transition=self.transitions[i]
             result+="TRANSITION t" + str(i) + ".[" + transition.event + "]\n\tCONSUME\n"
             for (place_id, weight) in zip(transition.input_ids, transition.input_weights):
@@ -197,8 +196,9 @@ class PetriNet(object):
         tina_model_file=open("tina.net", 'w')
         tina_model_file.write(tina_string)
         tina_model_file.close()
-        tina=Popen(["/home/bruno/tina-3.4.2/bin/tina", "-R", "-q", "-stats", "tina.net"], stdin=PIPE, stdout=PIPE)
+        tina=Popen(["/home/bruno/tina-3.4.2/bin/tina", "-C", "-q", "-stats",  "tina.net"], stdin=PIPE, stdout=PIPE)
         output=tina.communicate()[0].decode()
+        print(output)
         output=output.split(' ')
         print("REMOVING")
         n_output=len(output)
@@ -211,9 +211,12 @@ class PetriNet(object):
             i+=1
         n_dead= int(output[i-1].split('\n')[1])
         i+=3
-        while output[i][-4:] != 'dead':
+        while "t_" not in output[i]:
             i+=1
-        i+=2        
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(n_dead)
+        print(output[i])
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         dead_trans_ids = [int(output[i+j].split('_')[1]) for j in range(0,n_dead)]
         dead_trans_ids.sort(reverse=True)
         for dead_trans_id in dead_trans_ids:
@@ -343,9 +346,10 @@ class PetriNet(object):
                     print("AHAH")
                     print(next_marking)
             n_states+=1
-            if n_states > 200:
-                break
-            #print(n_states)
+            #if n_states > 200:
+                #break
+            if n_states%1000 == 0:    
+                print(n_states)
             if add_description_props:
                 state_description_props.append(self.get_marking_true_props(marking))
             transitions.append(new_transitions)
@@ -394,10 +398,26 @@ class PetriNet(object):
         while True:
             active_trans=self.get_active_transitions(marking)
             next_trans=choice(active_trans)
-            print([str(trans) for trans in active_trans])
+            for trans in active_trans:
+                print(str(trans))
             print(next_trans.event + '\n')
             marking=self.fire_transition(marking,next_trans)
+            print(str(marking))
             sleep(sleep_time)
+            
+    
+    def user_run(self):
+        marking=self.initial_marking
+        while True:
+            active_trans=self.get_active_transitions(marking)
+            next_trans=choice(active_trans)
+            for trans in active_trans:
+                print(str(trans))
+            next_trans_id=input("Trans number?")
+            next_trans=active_trans[int(next_trans_id)]
+            print(next_trans.event + '\n')
+            marking=self.fire_transition(marking,next_trans)
+            
             
     def print_equal_trans(self):
         res=0
@@ -419,9 +439,8 @@ class PetriNet(object):
         lola = Popen(["lola", '--formula=EF ' + marking_lola, '--quiet',
                           "--json"], stdin=PIPE, stdout=PIPE) 
         output=lola.communicate(input=lola_model)
-        print(str(output))
         result=json.loads(output[0].decode())
-        print(str(result))
+        print(str(result['analysis']['result']))
 
 
 

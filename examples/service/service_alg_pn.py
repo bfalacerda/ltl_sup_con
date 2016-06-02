@@ -17,7 +17,15 @@ pn.build_reachability_dfa().print_dot()
 pn.complete_prop_description()
 #pn.add_counter_place({'playing':1, '!charging':2})
 pn.add_init_state()
-
+pn.uc_events=['battery_below_3',
+ 'guidance_requested',
+ 'guidance_finished',
+ 'reached_reception_area',
+ 'battery_over_8',
+ 'play_requested',
+ 'play_finished',
+ 'reached_docking_area',
+ 'reached_playing_area']
 
 
 n_robots=int(sys.argv[1])
@@ -71,105 +79,120 @@ for (formula, spgec_def) in zip(formulas_list, spgecs_list):
 trans_map=pn_admis_check.build_plant_sup_trans_map(pn, res)
 mod_places=pn_admis_check.build_modified_places_mapping(pn, res, trans_map)
 mod_places_obj=pn_admis_check.InputPlaceCombs(mod_places)
-partial_cover_marking=pn_admis_check.PartialCoverMarking(pn.transitions[10], res.n_places,  mod_places_obj.place_ids[10][0], mod_places_obj.all_ks[10][0][0])
-(new_sup, marking)=pn_admis_check.build_pn_from_partial_cover_marking(partial_cover_marking, res)
+
+#for i in range(0, len(pn.transitions)):
+    #trans=pn.transitions[i]
+    #if trans.event in pn.uc_events:
+        #place_ids=mod_places_obj.place_ids[i]
+        #all_ks=mod_places_obj.all_ks[i]
+        #for (mod_places, ks) in zip(place_ids, all_ks):
+            #for k_tuple in ks:
+                #partial_cover_marking=pn_admis_check.PartialCoverMarking(trans, res.n_places,  mod_places, k_tuple)
+                #(new_sup, marking)=pn_admis_check.build_pn_from_partial_cover_marking(partial_cover_marking, res)
+                #new_sup.check_reachability(marking)
+                ##new_sup.remove_dead_trans_tina()
 
 ##new_sup.random_run(0)
 #dfa=new_sup.build_reachability_dfa()
 #dfa.print_dot()
     
-###############AQUI    
-#res.remove_init_state()
-###res.random_run(sleep_time=1)
+##############AQUI    
+res.remove_init_state()
+##res.random_run(sleep_time=1)
 
-#pn_list=[deepcopy(res) for i in range(0,n_robots)]
-#for i in range(0,n_robots):
-    #pn_list[i].add_index(i)
+pn_list=[deepcopy(res) for i in range(0,n_robots)]
+for i in range(0,n_robots):
+    pn_list[i].add_index(i)
    
-#prod=pn_list[0]
-#for i in range(1,n_robots):
-    #prod=alg_pn_compositions.parallel_composition(prod, pn_list[i])
+prod=pn_list[0]
+for i in range(1,n_robots):
+    prod=alg_pn_compositions.parallel_composition(prod, pn_list[i])
     
-##print(prod)
+#print(prod)
 
-###print(ltl_dfa)
-
-
-##prod.random_run()
+##print(ltl_dfa)
 
 
-#formulas_list=[None for i in range(1 + n_robots)]
-#spgecs_list=[None for i in range(1 + n_robots)]
+#prod.random_run()
 
-#counter_place_def={}
 
-#for i in range(0, n_robots):
-        #counter_place_def['at_reception_area' + str(i)]=1
-        #counter_place_def['going_to_reception_area' + str(i)]=1
-#prod.add_counter_place(counter_place_def, "n_to_reception")
+formulas_list=[None for i in range(1 + n_robots)]
+spgecs_list=[None for i in range(1 + n_robots)]
 
-#for j in range(0, n_robots):
-    #spgecs_list[j+1]={'battery_high' + str(j):['battery_high'+ str(j),1], 
-                    #'!battery_high'+ str(j):['!battery_high'+ str(j),1],
-                    #"at_least_one_to_reception":["n_to_reception",1],
-                    #"!at_least_one_to_reception":["!n_to_reception",2*n_robots]}
-    #formulas_list[j+1]='[] ((battery_high' + str(j) + ' && at_least_one_to_reception) -> (X (!stop_offering_to_play' + str(j) + ')))'
+counter_place_def={}
+
+for i in range(0, n_robots):
+        counter_place_def['at_reception_area' + str(i)]=1
+        counter_place_def['going_to_reception_area' + str(i)]=1
+prod.add_counter_place(counter_place_def, "n_to_reception")
+
+for j in range(0, n_robots):
+    spgecs_list[j+1]={'battery_high' + str(j):['battery_high'+ str(j),1], 
+                    '!battery_high'+ str(j):['!battery_high'+ str(j),1],
+                    "at_least_one_to_reception":["n_to_reception",1],
+                    "!at_least_one_to_reception":["!n_to_reception",2*n_robots]}
+    formulas_list[j+1]='[] ((battery_high' + str(j) + ' && at_least_one_to_reception) -> (X (!stop_offering_to_play' + str(j) + ')))'
     
-#spgecs_list[0]={"at_least_one_to_reception":["n_to_reception",1],
-                 #"!at_least_one_to_reception":["!n_to_reception",2*n_robots]}
-#formula='[] ((!at_least_one_to_reception) -> (X ('
-#for i in range(0,n_robots):
-    #formula+='!go_to_playing_area' + str(i) + ' && !offer_to_play' + str(i) + ' && '
-#formula=formula[:-4]+')))'
-#formulas_list[0]=formula
+spgecs_list[0]={"at_least_one_to_reception":["n_to_reception",1],
+                 "!at_least_one_to_reception":["!n_to_reception",2*n_robots]}
+formula='[] ((!at_least_one_to_reception) -> (X ('
+for i in range(0,n_robots):
+    formula+='!go_to_playing_area' + str(i) + ' && !offer_to_play' + str(i) + ' && '
+formula=formula[:-4]+')))'
+formulas_list[0]=formula
 
-#print(str(formulas_list))
-#print(str(spgecs_list))
+print(str(formulas_list))
+print(str(spgecs_list))
 
 
-#prod.add_init_state()
+prod.add_init_state()
     
-###INCREMENTAL MONOLITHIC
-#res=prod
-#print(res.n_places)
-#print(len(res.transitions))
-##formulas_list=[formulas_list[-1]]+formulas_list[:-1]
-#i=0
-#for (formula, spgec_def) in zip(formulas_list, spgecs_list):
-    #print(formula)
-    #ltl_dfa=LtlDfa(formula)
-    #print(spgec_def)
-    ##modular=alg_pn_compositions.alg_pn_ltl_dfa_composition(prod,ltl_dfa,spgec_def,n_specs)
-    #res=alg_pn_compositions.alg_pn_ltl_dfa_composition(res,ltl_dfa,spgec_def,n_specs)
-    #print("--------------------------\n\n\n")
-    ##print(res)
+##INCREMENTAL MONOLITHIC
+res=prod
+print(res.n_places)
+print(len(res.transitions))
+#formulas_list=[formulas_list[-1]]+formulas_list[:-1]
+i=0
+for (formula, spgec_def) in zip(formulas_list, spgecs_list):
+    print(formula)
+    ltl_dfa=LtlDfa(formula)
+    print(spgec_def)
+    #modular=alg_pn_compositions.alg_pn_ltl_dfa_composition(prod,ltl_dfa,spgec_def,n_specs)
+    res=alg_pn_compositions.alg_pn_ltl_dfa_composition(res,ltl_dfa,spgec_def,n_specs)
+    print("--------------------------\n\n\n")
+    #print(res)
+    print(res.n_places)
+    print(len(res.transitions))
+    n_specs+=1
+    #res.random_run(sleep_time=0)
+    #res.remove_dead_trans_lola()
+    #res.build_dead_trans_lp2(0)
+    #if i==0:
+        #break
+    #i+=1
+    #res.build_dead_trans_lp2(0)
     #print(res.n_places)
-    #print(len(res.transitions))
-    #n_specs+=1
-    ##res.random_run(sleep_time=0)
-    ##res.remove_dead_trans_lola()
-    ##res.build_dead_trans_lp2(0)
-    ##if i==0:
-        ##break
-    ##i+=1
-    ##res.build_dead_trans_lp2(0)
-    ##print(res.n_places)
-    ##print(len(res.transitions))  
-    ##print(res)
-    ##res.random_run(sleep_time=0)
-##print(res.generate_lola_string(False))    
-###for formula in formulas_list:
-    ###print(formula)
-#res.remove_dead_trans_tina()
-#trans_map=pn_admis_check.build_plant_sup_trans_map(prod, res)
-#mod_places=pn_admis_check.build_modified_places_mapping(prod, res, trans_map)
-#mod_places_obj=pn_admis_check.InputPlaceCombs(mod_places)
-#partial_cover_marking=pn_admis_check.PartialCoverMarking(prod.transitions[10], res.n_places,  mod_places_obj.place_ids[10][0], mod_places_obj.all_ks[10][0][3])
-#(new_sup, marking)=pn_admis_check.build_pn_from_partial_cover_marking(partial_cover_marking, res)
-#new_sup.random_run(0)
+    #print(len(res.transitions))  
+    #print(res)
+    #res.random_run(sleep_time=0)
+#print(res.generate_lola_string(False))    
+##for formula in formulas_list:
+    ##print(formula)
+res.remove_dead_trans_tina()
+for i in range(0, len(prod.transitions)):
+    trans=pn.transitions[i]
+    if trans.event in pn.uc_events:
+        print(str(trans))
+        place_ids=mod_places_obj.place_ids[i]
+        all_ks=mod_places_obj.all_ks[i]
+        for (mod_places, ks) in zip(place_ids, all_ks):
+            for k_tuple in ks:
+                partial_cover_marking=pn_admis_check.PartialCoverMarking(trans, res.n_places,  mod_places, k_tuple)
+                (new_sup, marking)=pn_admis_check.build_pn_from_partial_cover_marking(partial_cover_marking, res)
+                new_sup.check_reachability(marking)
 
 
-############AQUI
+###########AQUI
 
 
 #res.remove_dead_trans_lola()

@@ -77,23 +77,44 @@ An example of building a `SymbPetriNet` can be found [here](examples/soccer/socc
 
 The [`AlgPetriNet`](src/algebraic_pn.py#L11) represents a PN where (state-based) atomic propositions are represented by linear constraints over sets of bounded places. This is done by extending the `PetriNet` class with the following attributes:
 
-* `bounded_places_descriptors`
+* `bounded_places_descriptors` is a list of names for the different pairs of bounded places in the model.
 
-* `place_bounds`
+* `place_bounds` is a dictionary of the form `{bounded_place_descriptor:k,...}`, i.e., keys are elements of `bounded_place_descriptors`, and values are the bound for the corresponding places
 
-* `positive_bounded_places`
+* `positive_bounded_places` is a dictionary of the form `{bounded_place_descriptor:i,...}`, i.e., keys are elements of `bounded_place_descriptors`, and values are the index of the place bounded by `place_bounds[bounded_place_descriptor]`
 
-* `complement_bounded_places`
+* `complement_bounded_places` is a dictionary of the form `{bounded_place_descriptor:i,...}`, i.e., keys are elements of `bounded_place_descriptors`, and values are the index of the complement place of `positive_bounded_places[bounded_place_descriptor]`.  This dict does not need to be fully defined, ad the method [`complete_prop_description`](src/algebraic_pn.py#L69) will add the misisng complement places from elements of `positive_bounded_places`. Note that for all markings `M` and elements of `bounded_place_descriptors`, we require 
 
-
-
-
+ ``M(positive_bounded_places[bounded_place_descriptor]) + M(complement_bounded_places[bounded_place_descriptor]) = place_bounds[bounded_place_descriptor]``
 
 
+This class also allows for the addition of *counter places*, using the method [`add_counter_place`](src/algebraic_pn.py#L155). This method receives a dict `weight_dict` mapping place names to its weight, and adds a place `counter` to the PN such that, for all markings `M`:
+
+``M(counter) = weight_dict[place_1]*M(place_1) + ... +  weight_dict[place_n]*M(place_n)``
+
+An example of building an `AlgPetriNet` can be found [here](examples/task/task_assignment.py).
+
+### Compositions functions
+
+We have defined composition functions for [`DesDfa`](src/des_dfa_compositions), [`SymbPetriNet`](src/symb_pn_compositions), and [`AlgPetriNet`](src/alg_pn_compositions). These are:
+
+* `parallel_composition`: Given two DES models, returns the DES model corresponding to the parallel composition of the two input models by synchronising shared events.
+
+* `ltl_dfa_composition`: Given a DES model, and an `LtlDfa`, builds the DES model representing the restriction of the language of the DES model to the language that satisfies the safe LTL formula used to generate the `LtlDfa`.
+
+Examples of usage of these composition functions can be found [here](examples).
 
 
+### Admissibility Checking
 
+The admissibility checking algorithm for Petri nets is implemented [here](src/pn_admis_check.py) an requires the installation of the [LoLa 2.0](http://service-technology.org/files/lola/) tool. It is based on the approach presented in
 
+Bruno Lacerda and Pedro U. Lima. [*On the Notion of Uncontrollable Marking in Supervisory Control of Petri Nets.*](http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6807731&tag=1) IEEE Transactions on Automatic Control, Vol. 59, No. 11, 2014.
 
+ Unfortunately, it is very inefficient, and cannot be used except for very small models. We suggest the use of the specification language restriction presented in
+
+Bruno Lacerda. [*Supervision of Discrete Event Systems Based on Temporal Logic Specifications.*](http://welcome.isr.tecnico.ulisboa.pt/publications/supervision-of-discrete-event-systems-based-on-temporal-logic-specifications/)  PhD Thesis, Instituto Superior T&eacute;cnico, 2013.
+
+This restriction guarantees admissibility by construction.
 
 

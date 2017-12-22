@@ -59,3 +59,10 @@ target/
 
 #aux files
 *kate-swp
+
+
+# tools installed
+lola/*
+PIPEv4.3.0/*
+tina-3.4.2/*
+

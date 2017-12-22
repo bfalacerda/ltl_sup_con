@@ -24,9 +24,10 @@ class LtlDfa(object):
         #build hoa dfa string representation
         cout = spot.get_cout()
         e = spot.default_environment.instance()
-        p = spot.empty_parse_error_list()
+        #p = spot.empty_parse_error_list()
         debug_opt = False
-        f = spot.parse_infix_psl(ltl_string, p, e, debug_opt)
+        #f = spot.parse_infix_psl(ltl_string, p, e, debug_opt)
+        f = spot.parse_formula(ltl_string)
         dict = spot.make_bdd_dict()
         print("GENERATE")
         a = spot.ltl_to_tgba_fm(f, dict)

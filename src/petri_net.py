@@ -196,7 +196,7 @@ class PetriNet(object):
         tina_model_file=open("tina.net", 'w')
         tina_model_file.write(tina_string)
         tina_model_file.close()
-        tina=Popen(["/home/bruno/tina-3.4.2/bin/tina", "-C", "-q", "-stats",  "tina.net"], stdin=PIPE, stdout=PIPE)
+        tina=Popen(["/home/bruno/ltl_sup_con/tina-3.4.2/bin/tina", "-C", "-q", "-stats",  "tina.net"], stdin=PIPE, stdout=PIPE)
         output=tina.communicate()[0].decode()
         print(output)
         output=output.split(' ')

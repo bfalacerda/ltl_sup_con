@@ -10,10 +10,10 @@ import alg_pn_compositions
 import pn_admis_check as pac
 
 
-n_robots=1
-n_tasks=2
-max_tasks=[1,1]
-system_loaded=2
+n_robots=32
+n_tasks=6
+max_tasks=[8*2,8*2,8*2,8*2,8*2,8*2]
+system_loaded=4
 many_inactive_robots=0
 
 max_system_load=0
@@ -177,7 +177,13 @@ pn.add_counter_place(counter_place_def, "inactive_robots")
 
 pn.add_init_state()
 
-if True:
+
+print("MODEL")
+print("PLACES: " + str(pn.n_places))
+print("TRANS: " + str(len(pn.transitions)))
+pn.remove_dead_trans_tina()
+
+if False:
 
     formulas_list=[None for i in range(0, 5)]
     spgecs_list=[None for i in range(0, 5)]
